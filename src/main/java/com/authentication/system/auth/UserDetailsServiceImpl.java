@@ -34,50 +34,50 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		String result = "";
-		HttpClient client = new HttpClient();
-		GetMethod getMethod = new GetMethod("http://localhost:8100/credential/user");
-		CredentialUserResponse credential = new CredentialUserResponse();
-
-		try {
-			client.executeMethod(getMethod);
-			result = getMethod.getResponseBodyAsString();
-//			System.out.println(result);
-		} catch (Exception e) {
-		} finally {
-			getMethod.releaseConnection();
-		}
-
-		HashMap<String, Object> result1 = new HashMap<>();
-		try {
-			result1 = new ObjectMapper().readValue(result, HashMap.class);
-			credential.setData(result1.get("data"));
-
-//            System.out.println(credential.getData());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		ArrayList<LinkedHashMap<String, Object>> data = credential.getData();
-		final List<AppUser> user1 = new ArrayList<UserDetailsServiceImpl.AppUser>();
-
-		for (int i = 0; i < data.size(); i++) {
-			AppUser user = new AppUser();
-			user.setId(data.get(i).get("id"));
-			user.setUsername(data.get(i).get("userId"));
-			user.setPassword(encoder.encode(data.get(i).get("password").toString()));
-			user.setRole(data.get(i).get("role"));
-			user1.add(user);
-		}
-		System.out.println(user1);
+//		String result = "";
+//		HttpClient client = new HttpClient();
+//		GetMethod getMethod = new GetMethod("http://localhost:8100/credential/user");
+//		CredentialUserResponse credential = new CredentialUserResponse();
+//
+//		try {
+//			client.executeMethod(getMethod);
+//			result = getMethod.getResponseBodyAsString();
+////			System.out.println(result);
+//		} catch (Exception e) {
+//		} finally {
+//			getMethod.releaseConnection();
+//		}
+//
+//		HashMap<String, Object> result1 = new HashMap<>();
+//		try {
+//			result1 = new ObjectMapper().readValue(result, HashMap.class);
+//			credential.setData(result1.get("data"));
+//
+////            System.out.println(credential.getData());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		ArrayList<LinkedHashMap<String, Object>> data = credential.getData();
+//		final List<AppUser> user1 = new ArrayList<UserDetailsServiceImpl.AppUser>();
+//
+//		for (int i = 0; i < data.size(); i++) {
+//			AppUser user = new AppUser();
+//			user.setId(data.get(i).get("id"));
+//			user.setUsername(data.get(i).get("userId"));
+//			user.setPassword(encoder.encode(data.get(i).get("password").toString()));
+//			user.setRole(data.get(i).get("role"));
+//			user1.add(user);
+//		}
+//		System.out.println(user1);
 
 		// hard coding the users. All passwords must be encoded.
-//		final List<AppUser> users = Arrays.asList(
-//				new AppUser(1, "omar", encoder.encode("12345"), "USER"),
-//				new AppUser(2, "admin", encoder.encode("12345"), "ADMIN")
-//			);
+		final List<AppUser> users = Arrays.asList(
+				new AppUser(1, "omar", encoder.encode("12345"), "USER"),
+				new AppUser(2, "admin", encoder.encode("12345"), "ADMIN")
+			);
 
-		for (AppUser appUser : user1) {
+		for (AppUser appUser : users) {
 			if (appUser.getUsername().equals(username)) {
 
 				// Remember that Spring needs roles to be in this format: "ROLE_" + userRole

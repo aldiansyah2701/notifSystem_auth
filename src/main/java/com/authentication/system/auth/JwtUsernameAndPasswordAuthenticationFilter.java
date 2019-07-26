@@ -105,19 +105,19 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 	
 	@Async("transactionPoolExecutor")
 	public void dataCredential(String userId, String token) {
-		String result = "";
-		HttpClient client = new HttpClient();
-		GetMethod getMethod = new GetMethod("http://localhost:8100/"+userId+"/"+token);
-		try {
-			client.executeMethod(getMethod);
-			result = getMethod.getResponseBodyAsString();
-			System.out.println("USER ID = "+userId);
-			System.out.println("TOKEN = "+token);
-		} catch (Exception e) {
-			logger.error(e);
-		} finally {
-			getMethod.releaseConnection();
-		}
+//		String result = "";
+//		HttpClient client = new HttpClient();
+//		GetMethod getMethod = new GetMethod("http://localhost:8100/"+userId+"/"+token);
+//		try {
+//			client.executeMethod(getMethod);
+//			result = getMethod.getResponseBodyAsString();
+//			System.out.println("USER ID = "+userId);
+//			System.out.println("TOKEN = "+token);
+//		} catch (Exception e) {
+//			logger.error(e);
+//		} finally {
+//			getMethod.releaseConnection();
+//		}
 	}
 	
 	
